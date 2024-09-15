@@ -71,7 +71,11 @@ function Header(props: Props) {
         {navItems.map((item) => (
           <ListItem key={item.href} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <Link href={item.href} passHref style={{ textDecoration: 'none' }}>
+              <Link
+                href={item.href}
+                passHref
+                style={{ textDecoration: "none" }}
+              >
                 <ListItemText primary={item.label} />
               </Link>
             </ListItemButton>
@@ -85,151 +89,131 @@ function Header(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Container>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar component="nav">
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-            {/* Desktop View: Logo on left, nav items centered, icons on right */}
+          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/016/218/971/original/online-shop-logo-template-with-dark-blue-background-suitable-for-your-design-need-logo-illustration-animation-etc-free-vector.jpg"
+              alt="Best Shop Logo"
+              width={50}
+              height={50}
+              style={{
+                borderRadius: "10px",
+                marginRight: "20px",
+              }}
+            />
             <Box
               sx={{
                 flexGrow: 1,
                 display: { xs: "none", sm: "flex" },
-                alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", mr: "auto" }}>
-                <img
-                  src="https://static.vecteezy.com/system/resources/previews/016/218/971/original/online-shop-logo-template-with-dark-blue-background-suitable-for-your-design-need-logo-illustration-animation-etc-free-vector.jpg"
-                  alt="Best Shop Logo"
-                  width={50}
-                  height={50}
-                  style={{
-                    borderRadius: "10px",
-                    marginRight: "20px",
-                  }}
-                />
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                {navItems.map((item) => (
-                  <Link key={item.href} href={item.href} passHref style={{ textDecoration: 'none' }}>
-                    <Button sx={{ color: "#fff", mx: 2 }}>{item.label}</Button>
-                  </Link>
-                ))}
-              </Box>
-            </Box>
-
-            {/* Mobile View: Logo on left, icons visible */}
-            <Box
-              sx={{
-                display: { xs: "flex", sm: "none" },
-                alignItems: "center",
-                flexGrow: 1,
-              }}
-            >
-              <img
-                src="https://static.vecteezy.com/system/resources/previews/016/218/971/original/online-shop-logo-template-with-dark-blue-background-suitable-for-your-design-need-logo-illustration-animation-etc-free-vector.jpg"
-                alt="Best Shop Logo"
-                width={50}
-                height={50}
-                style={{
-                  borderRadius: "10px",
-                  marginRight: "20px",
-                }}
-              />
-            </Box>
-
-            {/* Icons on right for desktop and mobile */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                color="inherit"
-                aria-label="cart"
-                sx={{ display: { xs: "block", sm: "block" } }} // Ensure cart icon is visible on both mobile and desktop
-              >
-                <Link href="/products/cart" passHref>
-                  <Badge badgeContent={cartItemCount} color="error">
-                    <ShoppingCartIcon sx={{ color: "white" }} />
-                  </Badge>
+              {navItems.map((item) => (
+                <Link key={item.href} href={item.href} passHref>
+                  <Button sx={{ color: "#fff", mx: 2 }}>{item.label}</Button>
                 </Link>
-              </IconButton>
-
-              <IconButton
-                color="inherit"
-                aria-label="account"
-                onClick={handleMenuClick}
-              >
-                <AccountCircleIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleMenuClose}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.2))",
-                    mt: 1.5,
-                    "& .MuiMenuItem-root": {
-                      py: 1,
-                      px: 2,
-                    },
-                  },
-                }}
-              >
-                <MenuItem onClick={handleMenuClose}>
-                  <Link href="/login" passHref style={{ textDecoration: "none" }}>
-                    Login
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <Link href="/register" passHref style={{ textDecoration: "none" }}>
-                    Register
-                  </Link>
-                </MenuItem>
-              </Menu>
+              ))}
             </Box>
-          </Toolbar>
-        </AppBar>
-        <nav>
-          <Drawer
-            container={container}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
+          </Box>
+
+          <Box
             sx={{
-              display: { xs: "block", sm: "none" },
-              "& .MuiDrawer-paper": {
-                boxSizing: "border-box",
-                width: drawerWidth,
-              },
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            {drawer}
-          </Drawer>
-        </nav>
-        <Box component="main" sx={{ p: 3 }}></Box>
-      </Box>
-    </Container>
+            <IconButton
+              color="inherit"
+              aria-label="cart"
+              sx={{ display: { xs: "block", sm: "block" } }}
+            >
+              <Link href="/products/cart" passHref>
+                <Badge badgeContent={cartItemCount} color="error">
+                  <ShoppingCartIcon sx={{ color: "white" }} />
+                </Badge>
+              </Link>
+            </IconButton>
+
+            <IconButton
+              color="inherit"
+              aria-label="account"
+              onClick={handleMenuClick}
+            >
+              <AccountCircleIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.2))",
+                  mt: 1.5,
+                  "& .MuiMenuItem-root": {
+                    py: 1,
+                    px: 2,
+                  },
+                },
+              }}
+            >
+              <MenuItem onClick={handleMenuClose}>
+                <Link
+                  href="/login"
+                  passHref
+                  style={{ textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleMenuClose}>
+                <Link
+                  href="/register"
+                  passHref
+                  style={{ textDecoration: "none" }}
+                >
+                  Register
+                </Link>
+              </MenuItem>
+            </Menu>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <nav>
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </nav>
+    </Box>
   );
 }
 
