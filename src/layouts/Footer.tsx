@@ -13,7 +13,7 @@ import { FaFacebook, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ padding: "0px 0" }}>
         <Box sx={{ textAlign: "center", mb: 3 }}>
           <Typography

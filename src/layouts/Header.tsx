@@ -89,7 +89,7 @@ function Header(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Container maxWidth="lg" sx={{ display: "flex", marginBlockEnd: "64px" }}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -172,11 +172,7 @@ function Header(props: Props) {
               }}
             >
               <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="/login"
-                  passHref
-                  style={{ textDecoration: "none" }}
-                >
+                <Link href="/login" passHref style={{ textDecoration: "none" }}>
                   Login
                 </Link>
               </MenuItem>
@@ -213,7 +209,7 @@ function Header(props: Props) {
           {drawer}
         </Drawer>
       </nav>
-    </Box>
+    </Container>
   );
 }
 
