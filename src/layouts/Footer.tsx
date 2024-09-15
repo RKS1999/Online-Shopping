@@ -115,6 +115,15 @@ const Footer = () => {
                   Contact
                 </Typography>
               </Link>
+              <Link
+                href="/products/cart"
+                passHref
+                style={{ textDecoration: "none" }}
+              >
+                <Typography variant="subtitle1" sx={{ color: "#0096FF" }}>
+                  Cart
+                </Typography>
+              </Link>
               <Link href="/login" passHref style={{ textDecoration: "none" }}>
                 <Typography variant="subtitle1" sx={{ color: "#0096FF" }}>
                   Login
