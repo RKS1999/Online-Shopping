@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "next/link";
-import { toast } from 'react-toastify'; // Import toast
+import { toast } from "react-toastify"; // Import toast
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,8 @@ export default function Register() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => { // Specify the event type
+  const handleSubmit = async (e: React.FormEvent) => {
+    // Specify the event type
     e.preventDefault();
     setError(null);
     try {

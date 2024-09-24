@@ -193,7 +193,9 @@ function Header(props: Props) {
                   Register
                 </Link>
               </MenuItem>
-              <MenuItem onClick={handleLogout}> {/* Logout Menu Item */}
+              <MenuItem onClick={handleLogout}>
+                {" "}
+                {/* Logout Menu Item */}
                 Logout
               </MenuItem>
             </Menu>

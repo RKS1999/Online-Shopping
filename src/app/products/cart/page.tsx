@@ -20,7 +20,6 @@ import {
 } from "@/redux-toolkit/slice/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Link from "next/link";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
