@@ -24,6 +24,7 @@ import Link from "next/link";
 import { Container } from "@mui/material";
 import { logout } from "@/api/functions/authApi"; // Import the logout function
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import Image from "next/image";
 
 interface Props {
   window?: () => Window;
@@ -112,7 +113,7 @@ function Header(props: Props) {
           </IconButton>
 
           <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            <img
+            <Image
               src="https://static.vecteezy.com/system/resources/previews/016/218/971/original/online-shop-logo-template-with-dark-blue-background-suitable-for-your-design-need-logo-illustration-animation-etc-free-vector.jpg"
               alt="Best Shop Logo"
               width={50}

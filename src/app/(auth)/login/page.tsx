@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react"; // Import useEffect
+import { useState, Suspense } from "react"; // Import Suspense
 import { login } from "@/api/functions/authApi"; // Ensure this path is correct
 import { useRouter } from "next/navigation";
 import Box from "@mui/material/Box";
@@ -14,7 +14,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // New state variable
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "/"; // Default to home if no redirect
@@ -24,7 +23,6 @@ export default function Login() {
     setError(null);
     try {
       await login({ email, password });
-      setIsLoggedIn(true); // Set logged in state to true
       toast.success("Login successful!"); // Show success toast
       router.push(redirectPath); // Redirect to the original page after successful login
     } catch (err) {
@@ -32,51 +30,39 @@ export default function Login() {
     }
   };
 
-  // Effect to check if user is already logged in
-  useEffect(() => {
-    const userCookie = document.cookie.split('; ').find(row => row.startsWith('user='));
-    if (userCookie) {
-      setIsLoggedIn(true); // User is already logged in
-      router.push(redirectPath); // Redirect to the original page
-    }
-  }, [router, redirectPath]);
-
-  // If the user is logged in, do not show the login form
-  if (isLoggedIn) {
-    return null; // Or you can return a loading spinner or redirect
-  }
-
   return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h5" gutterBottom align="center">
-        Login
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Email"
-          type="email"
-          fullWidth
-          margin="normal"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <TextField
-          label="Password"
-          type="password"
-          fullWidth
-          margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <Button type="submit" variant="contained" fullWidth>
+    <Suspense fallback={<div>Loading...</div>}> {/* Wrap in Suspense */}
+      <Box sx={{ padding: 4 }}>
+        <Typography variant="h5" gutterBottom align="center">
           Login
-        </Button>
-        <h5>
-          Create New Account? <Link href="/register">Register</Link>
-        </h5>
-      </form>
-    </Box>
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Email"
+            type="email"
+            fullWidth
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <TextField
+            label="Password"
+            type="password"
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Button type="submit" variant="contained" fullWidth>
+            Login
+          </Button>
+          <h5>
+            Don&apos;t have an account? <Link href="/register">Register</Link>
+          </h5>
+        </form>
+      </Box>
+    </Suspense>
   );
 }
