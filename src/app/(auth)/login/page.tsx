@@ -74,7 +74,7 @@ export default function Login() {
           Login
         </Button>
         <h5>
-          Don't have an account? <Link href="/register">Register</Link>
+          Create New Account? <Link href="/register">Register</Link>
         </h5>
       </form>
     </Box>
