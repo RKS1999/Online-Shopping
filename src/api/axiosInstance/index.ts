@@ -1,26 +1,50 @@
 import axios from "axios";
-import { baseURL } from "../endpoints";
+import { productURL, userURL } from "../endpoints";
 
 const axiosInstance = axios.create({
-  baseURL,
+  baseURL: productURL,
 });
 
+const authAxiosInstance = axios.create({
+  baseURL: userURL,
+});
+
+// Interceptors for axios instance
 axiosInstance.interceptors.request.use(
-  function (config) {
+  (config) => {
     return config;
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
 axiosInstance.interceptors.response.use(
-  function (response) {
+  (response) => {
     return response;
   },
-  function (error) {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
-export default axiosInstance;
+// Interceptors for auth axios instance
+authAxiosInstance.interceptors.request.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+authAxiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export { axiosInstance, authAxiosInstance }; // Ensure both instances are exported

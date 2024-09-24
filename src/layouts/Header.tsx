@@ -22,6 +22,8 @@ import Badge from "@mui/material/Badge";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container } from "@mui/material";
+import { logout } from "@/api/functions/authApi"; // Import the logout function
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 
 interface Props {
   window?: () => Window;
@@ -40,6 +42,7 @@ function Header(props: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [cartItemCount, setCartItemCount] = useState(0);
   const open = Boolean(anchorEl);
+  const router = useRouter(); // Initialize useRouter
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -51,6 +54,11 @@ function Header(props: Props) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout(); // Clear the cookie
+    router.push("/login"); // Redirect to login page
   };
 
   useEffect(() => {
@@ -184,6 +192,9 @@ function Header(props: Props) {
                 >
                   Register
                 </Link>
+              </MenuItem>
+              <MenuItem onClick={handleLogout}> {/* Logout Menu Item */}
+                Logout
               </MenuItem>
             </Menu>
           </Box>

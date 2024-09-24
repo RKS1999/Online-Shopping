@@ -1,4 +1,4 @@
-import axiosInstance from "../axiosInstance";
+import { axiosInstance } from "../axiosInstance"; // Corrected import
 import { endpoints } from "../endpoints";
 
 export const getAllProducts = async () => {
