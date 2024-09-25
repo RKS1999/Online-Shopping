@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Ensure this file is recognized as a client component
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -22,8 +22,8 @@ import Badge from "@mui/material/Badge";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container } from "@mui/material";
-import { logout } from "@/api/functions/authApi"; // Import the logout function
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { logout } from "../api/functions/authApi"; // Ensure correct path to your authApi
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface Props {
@@ -37,13 +37,14 @@ const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-function Header(props: Props) {
+const Header = (props: Props) => {
   const { window } = props;
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [cartItemCount, setCartItemCount] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const open = Boolean(anchorEl);
-  const router = useRouter(); // Initialize useRouter
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -57,9 +58,16 @@ function Header(props: Props) {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    logout(); // Clear the cookie
-    router.push("/login"); // Redirect to login page
+  const handleLogout = async () => {
+    try {
+      await logout(); // Call the logout function
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
+      handleMenuClose();
+      router.push("/login"); // Redirect to login after logout
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   useEffect(() => {
@@ -68,6 +76,11 @@ function Header(props: Props) {
       return total + item.quantity;
     }, 0);
     setCartItemCount(count);
+
+    const user = localStorage.getItem("user");
+    if (user) {
+      setIsLoggedIn(true);
+    }
   }, []);
 
   const drawer = (
@@ -78,140 +91,99 @@ function Header(props: Props) {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item.href} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <Link
-                href={item.href}
-                passHref
-                style={{ textDecoration: "none" }}
-              >
+          <ListItem key={item.label} disablePadding>
+            <Link href={item.href} passHref>
+              <ListItemButton sx={{ textAlign: "center" }}>
                 <ListItemText primary={item.label} />
-              </Link>
-            </ListItemButton>
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
     </Box>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
-    <Container maxWidth="lg" sx={{ display: "flex", marginBlockEnd: "64px" }}>
+    <Box style={{ display: "flex", marginBlockEnd: "70px"  }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar component="nav" sx={{ backgroundColor: "white", color: "black" }}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
+            edge="start"
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
-
-          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            <Image
+          <Link href="/" passHref>
+            <img
               src="https://static.vecteezy.com/system/resources/previews/016/218/971/original/online-shop-logo-template-with-dark-blue-background-suitable-for-your-design-need-logo-illustration-animation-etc-free-vector.jpg"
-              alt="Best Shop Logo"
-              width={50}
-              height={50}
-              style={{
-                borderRadius: "10px",
-                marginRight: "20px",
-              }}
+              alt="Online Shopping"
+              width={40}
+              height={40}
+              style={{ borderRadius: "50px" }}
             />
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: { xs: "none", sm: "flex" },
-                justifyContent: "center",
-              }}
-            >
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href} passHref>
-                  <Button sx={{ color: "#fff", mx: 2 }}>{item.label}</Button>
-                </Link>
-              ))}
-            </Box>
-          </Box>
-
-          <Box
+          </Link>
+          <Container
             sx={{
-              display: "flex",
-              alignItems: "center",
+              display: { xs: "none", sm: "flex" },
+              justifyContent: "center",
+              flexGrow: 1,
             }}
           >
-            <IconButton
-              color="inherit"
-              aria-label="cart"
-              sx={{ display: { xs: "block", sm: "block" } }}
-            >
-              <Link href="/products/cart" passHref>
-                <Badge badgeContent={cartItemCount} color="error">
-                  <ShoppingCartIcon sx={{ color: "white" }} />
-                </Badge>
+            {navItems.map((item) => (
+              <Link key={item.label} href={item.href} passHref>
+                <Button variant="text" color="inherit">
+                  {item.label}
+                </Button>
               </Link>
-            </IconButton>
-
-            <IconButton
-              color="inherit"
-              aria-label="account"
-              onClick={handleMenuClick}
-            >
-              <AccountCircleIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleMenuClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.2))",
-                  mt: 1.5,
-                  "& .MuiMenuItem-root": {
-                    py: 1,
-                    px: 2,
-                  },
-                },
-              }}
-            >
-              <MenuItem onClick={handleMenuClose}>
-                <Link href="/login" passHref style={{ textDecoration: "none" }}>
-                  Login
+            ))}
+          </Container>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton color="inherit">
+              <Badge badgeContent={cartItemCount} color="error">
+                <Link href="/products/cart" passHref>
+                  <ShoppingCartIcon />
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="/register"
-                  passHref
-                  style={{ textDecoration: "none" }}
-                >
-                  Register
+              </Badge>
+            </IconButton>
+            {isLoggedIn ? (
+              <Box>
+                <IconButton color="inherit" onClick={handleMenuClick}>
+                  <AccountCircleIcon />
+                </IconButton>
+                <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link href="/profile" passHref>
+                      Profile
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </Box>
+            ) : (
+              <Box>
+                <Link href="/login" passHref>
+                  <Button color="inherit">Login</Button>
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleLogout}>
-                {" "}
-                {/* Logout Menu Item */}
-                Logout
-              </MenuItem>
-            </Menu>
+                <Link href="/register" passHref>
+                  <Button color="inherit">Register</Button>
+                </Link>
+              </Box>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
-      <nav>
+      <Box component="nav">
         <Drawer
-          container={container}
+          container={
+            window !== undefined ? () => window().document.body : undefined
+          }
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
@@ -222,9 +194,9 @@ function Header(props: Props) {
         >
           {drawer}
         </Drawer>
-      </nav>
-    </Container>
+      </Box>
+    </Box>
   );
-}
+};
 
 export default Header;

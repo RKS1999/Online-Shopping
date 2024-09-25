@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Typography,
@@ -10,6 +11,8 @@ import {
   Chip,
   Rating,
   Container,
+  IconButton,
+  TextField,
 } from "@mui/material";
 import { useGetProductDetails } from "@/hooks/react-query/useGetProductDetails";
 import { useAppDispatch } from "@/hooks/redux/page";
@@ -17,6 +20,7 @@ import { addProduct } from "@/redux-toolkit/slice/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import { Add, Remove } from "@mui/icons-material";
 
 export default function Page({ params }: { params: { productId: string } }) {
   const { productId } = params;

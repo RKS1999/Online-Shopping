@@ -7,6 +7,5 @@ export const getProductDetails = async (id: string) => {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };

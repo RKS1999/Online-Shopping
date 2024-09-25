@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { IoLogoWhatsapp, IoEnter } from "react-icons/io5";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
-import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -79,7 +78,7 @@ const Footer = () => {
         >
           <Grid item xs={12} sm={6} md={3}>
             <Box>
-              <Image
+              <img
                 src="https://static.vecteezy.com/system/resources/previews/016/218/971/original/online-shop-logo-template-with-dark-blue-background-suitable-for-your-design-need-logo-illustration-animation-etc-free-vector.jpg"
                 alt="Best Shop Logo"
                 style={{
@@ -222,7 +221,7 @@ const Footer = () => {
           <Grid item xs={12} sm={6} md={3} sx={{ textAlign: "left" }}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Image
+                <img
                   src="https://st4.depositphotos.com/4678277/40811/i/450/depositphotos_408110334-stock-photo-full-length-body-size-view.jpg"
                   alt="Shop Image 1"
                   style={{
@@ -234,7 +233,7 @@ const Footer = () => {
                 />
               </Grid>
               <Grid item xs={6}>
-                <Image
+                <img
                   src="https://cdn.create.vista.com/api/media/small/464163046/stock-photo-cheerful-happy-teen-asian-woman-enjoying-shopping-she-carrying-shopping"
                   alt="Shop Image 2"
                   style={{
@@ -246,7 +245,7 @@ const Footer = () => {
                 />
               </Grid>
               <Grid item xs={6}>
-                <Image
+                <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdIgKihpzJcI6htq6FlIzON-Sn35gfU3OPyVxjI4ydWFznzdlbacV59bHR2Vj1aJK2Osw&usqp=CAU"
                   alt="Shop Image 3"
                   style={{
@@ -258,7 +257,7 @@ const Footer = () => {
                 />
               </Grid>
               <Grid item xs={6}>
-                <Image
+                <img
                   src="https://img.etimg.com/thumb/msid-54752786,width-480,height-360,imgsize-80020,resizemode-75/1-how-many-times-do-you-shop.jpg"
                   alt="Shop Image 4"
                   style={{
