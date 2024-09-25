@@ -62,13 +62,22 @@ export default function Login() {
 
   const onSubmit = async (data: any) => {
     try {
+      console.log("Attempting to log in with data:", data);
       const userData = await login(data); // Use the login function here
-      localStorage.setItem("user", JSON.stringify(userData)); // Save user data in local storage
-      toast.success("Login successful!"); // Show success toast
-      router.push("/products"); 
-      reset();
-      setSubmitError(null);
+      console.log("User data received:", userData); // Log user data
+
+      if (userData) {
+        localStorage.setItem("user", JSON.stringify(userData)); // Save user data in local storage
+        toast.success("Login successful!"); // Show success toast
+        router.push("/products"); // Redirect to products page
+        reset();
+        setSubmitError(null);
+      } else {
+        toast.error("Login failed. No user data received."); // Handle unexpected case
+        setSubmitError("An error occurred while logging in. Please try again.");
+      }
     } catch (error) {
+      console.error("Login error:", error); // Log the error
       toast.error("Login failed. Please check your credentials."); // Show error toast
       setSubmitError("An error occurred while logging in. Please try again.");
     }
